@@ -6,43 +6,21 @@
 <script>
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    scopedSlots: { customRender: 'name' },
+    title: "Name",
+    dataIndex: "name",
+    scopedSlots: { customRender: "name" },
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
+    title: "Age",
+    dataIndex: "age",
   },
 ];
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
+    key: "1",
+    name: "John Brown",
     age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    address: "New York No. 1 Lake Park",
   },
 ];
 
@@ -53,15 +31,30 @@ export default {
       columns,
     };
   },
+  created() {
+    this.axios({
+      method: "get",
+      url: "https://apimusic.linweiqin.com/search/",
+      params: {
+        keywords: "热门",
+      },
+    }).then((res) => {
+      console.log(res);
+    });
+  },
   computed: {
     rowSelection() {
       return {
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
         },
-        getCheckboxProps: record => ({
+        getCheckboxProps: (record) => ({
           props: {
-            disabled: record.name === 'Disabled User', // Column configuration not to be checked
+            disabled: record.name === "Disabled User", // Column configuration not to be checked
             name: record.name,
           },
         }),
