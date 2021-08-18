@@ -4,7 +4,7 @@
       <div class="components-input-demo-presuffix">
         <div class="login-title">欢迎使用</div>
         <div class="login-title1">大会员系统</div>
-        <a-input  placeholder="请输入账号" />
+        <a-input placeholder="请输入账号" />
         <br />
         <!-- <a-icon slot="prefix" type="user" /> -->
         <a-input prefix="￥" placeholder="请输入密码" />
@@ -25,11 +25,12 @@ export default {
       userName: "",
     };
   },
-  methods: {
-    emitEmpty() {
-      this.$refs.userNameInput.focus();
-      this.userName = "";
+  inject: {
+    parentObj: {
+      default: () => ({}),
     },
+  }, // 或者inject: ['parentObj']
+  methods: {
     onChange(e) {
       console.log(`checked = ${e.target.checked}`);
     },

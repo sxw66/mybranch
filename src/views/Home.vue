@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-side" style="min-height: 100vh">
     <a-layout-sider v-model="collapsed" collapsible>
-      <h2 class="logo" style="color: white">营销工具系统</h2>
+      <h2 class="logo" style="color: white,overflow: hidden">营销工具系统</h2>
       <a-menu theme="dark" :default-selected-keys="['1']" mode="inline">
         <a-menu-item key="1">
           <a-icon type="bank" />
@@ -11,8 +11,10 @@
           <template v-slot:title>
             <span><a-icon type="user" />数据概览</span>
           </template>
-          <a-menu-item key="3"> 商业概览 </a-menu-item>
-          <a-menu-item key="4"> 物业概览</a-menu-item>
+          <a-menu-item key="3" @click="businesssyoverview">
+            商业概览
+          </a-menu-item>
+          <a-menu-item key="4" @click="propertyoverview"> 物业概览</a-menu-item>
           <a-menu-item key="5"> 地产概览 </a-menu-item>
           <a-menu-item key="6"> 商城概览 </a-menu-item>
         </a-sub-menu>
@@ -20,17 +22,17 @@
           <template v-slot:title>
             <span><a-icon type="user" />用户分类</span>
           </template>
-          <a-menu-item key="3"> 用户标签 </a-menu-item>
-          <a-menu-item key="4"> 用户群分 </a-menu-item>
+          <a-menu-item key="13"> 用户标签 </a-menu-item>
+          <a-menu-item key="14"> 用户群分 </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <template v-slot:title>
             <span><a-icon type="team" /><span>标签管理</span></span>
           </template>
-          <a-menu-item key="6"> 事件元 </a-menu-item>
-          <a-menu-item key="7"> 事件属性 </a-menu-item>
-          <a-menu-item key="8"> 用户属性 </a-menu-item>
-          <a-menu-item key="9"> 标签分组 </a-menu-item>
+          <a-menu-item key="16" @click="eventyuan"> 事件元 </a-menu-item>
+          <a-menu-item key="17"> 事件属性 </a-menu-item>
+          <a-menu-item key="18"> 用户属性 </a-menu-item>
+          <a-menu-item key="19"> 标签分组 </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub3">
           <template v-slot:title>
@@ -43,38 +45,50 @@
           <template v-slot:title>
             <span><a-icon type="team" /><span>系统管理</span></span>
           </template>
-          <a-menu-item key="61"> 用户管理 </a-menu-item>
-          <a-menu-item key="82"> 部门管理 </a-menu-item>
-          <a-menu-item key="82"> 权限管理 </a-menu-item>
-          <a-menu-item key="82"> 日志管理 </a-menu-item>
+          <a-menu-item key="23"> 用户管理 </a-menu-item>
+          <a-menu-item key="20"> 部门管理 </a-menu-item>
+          <a-menu-item key="21"> 权限管理 </a-menu-item>
+          <a-menu-item key="22"> 日志管理 </a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
-        <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
-        >
-          Bill is a cat.
-        </div>
-      </a-layout-content>
-      <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
-      </a-layout-footer>
-    </a-layout>
+    <syoverviewlist v-show="syoverviewfalg" />
+    <eventyuanlist v-show="sjeventyuan" />
   </a-layout>
 </template>
 <script>
+
+import syoverviewlist from "./menulist/syoverviewlist.vue";
+import eventyuanlist from "./menulist/eventyuanlist.vue";
+
 export default {
+  components: {
+    syoverviewlist,
+    eventyuanlist,
+  },
   data() {
     return {
-      collapsed: true,
+      collapsed: false,
+      syoverviewfalg: false,
+      sjeventyuan: false,
     };
+  },
+  watch: {
+    syoverviewfalg(newVal, oldVal) {
+      //实时监控数据的变化
+      console.log("newVal", newVal);
+      console.log("oldVal", oldVal);
+    },
+  },
+  methods: {
+    businesssyoverview() {
+      this.syoverviewfalg = !this.syoverviewfalg;
+    },
+    propertyoverview() {},
+    eventyuan() {
+      this.sjeventyuan = true;
+      this.syoverviewfalg=false;
+    },
   },
 };
 </script>
